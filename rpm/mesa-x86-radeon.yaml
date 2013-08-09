@@ -1,0 +1,281 @@
+Name: mesa-x86-radeon
+Summary: Mesa graphics libraries built for Radeon
+Version: 9.1.0
+Release: 1
+Group: System/Libraries
+License: MIT
+URL: http://www.mesa3d.org/beta
+Sources:
+    - "%{name}-%{version}.tar.bz2"
+
+Description: |
+    Mesa is an open-source implementation of the OpenGL specification  -
+    a system for rendering interactive 3D graphics.
+PkgBR:
+    - pkgconfig autoconf automake
+    - expat-devel >= 2.0
+    - python
+    - libxml2-python
+    - bison
+    - flex
+    - makedepend
+    - llvm
+    - llvm-devel
+    - gettext
+PkgConfigBR:
+    - glproto
+    - dri2proto >= 1.1
+    - xproto
+    - libdrm >= 2.4.30
+    - xxf86vm
+    - xext
+    - xfixes
+    - xdamage
+    - xi
+    - xmu
+    - libxml-2.0
+    - talloc
+    - libudev >= 160
+    - wayland-client
+Configure: reconfigure
+ConfigOptions:
+    - --enable-gles2
+    - --disable-gallium-egl
+    - --with-egl-platforms=wayland,drm
+    - --enable-gbm
+    - --enable-shared-glapi
+    - --with-gallium-drivers=r300,r600,swrast
+    - --enable-glx-tls
+    - --enable-glx
+#     - --with-dri-drivers=i915,i965,swrast
+    - --with-dri-drivers=radeon,r200
+#    - --with-state-trackers=egl
+#    - --enable-glew=no
+#    - --enable-glw=no
+#    - --enable-glut=no
+#    - --enable-gles1=yes
+#    - --enable-gles2=yes
+#    - --enable-egl=yes
+#    - --enable-gallium-egl
+#    - --enable-osmesa=no
+#    - --with-gallium-drivers=r300,r600,swrast
+#    - --with-egl-platforms=x11
+#    - --enable-glx-tls
+#    - --enable-glx=yes
+#    - --enable-dri
+Builder: make
+SubPackages:
+    - Name: libglapi
+      Summary: Mesa shared gl api library
+      Group: System/Libraries
+      Description: Mesa shared gl api library.
+      Files:
+          - "%{_libdir}/libglapi.so.0"
+          - "%{_libdir}/libglapi.so.0.*"
+
+    - Name: libgbm
+      Summary: Mesa GBM runtime libraries
+      Group: System/Libraries
+      Description: Mesa GBM runtime library.
+      Files:
+          - "%{_libdir}/libgbm.so.1"
+          - "%{_libdir}/libgbm.so.1.0.0"
+
+    - Name: libgbm-devel
+      Summary: Mesa libGBM development package
+      Group: System/Libraries
+      Description: Mesa libGLESv2 development package.
+      Provides:
+          - libgbm = %{version}-%{release}
+      Requires:
+          - mesa-x86-radeon-libgbm = %{version}-%{release}
+      Files:
+          - "%{_libdir}/libgbm.so"
+          - "%{_libdir}/pkgconfig/gbm.pc"
+          - "%{_includedir}/gbm.h"
+
+    - Name: libGLESv2
+      Summary: Mesa libGLESv2 runtime libraries
+      Group: System/Libraries
+      Description: Mesa libGLESv2 runtime library.
+      Provides:
+          - libGLESv2 = %{version}-%{release}
+      Files:
+          - "%{_libdir}/libGLESv2.so.2"
+          - "%{_libdir}/libGLESv2.so.2.0.0"
+
+    - Name: libGLESv2-compat
+      Summary: Mesa libGLESv2 runtime compatibility library
+      Group: System/Libraries
+      Description: Mesa libGLESv2 runtime compatibility library.
+      Requires:
+          - libGLESv2.so.2
+      Provides:
+          - libGLESv2.so
+      Files:
+          - "%{_libdir}/libGLESv2.so"
+
+    - Name: libEGL
+      Summary: Mesa libEGL runtime libraries and DRI drivers
+      Group: System/Libraries
+      Description: Mesa libEGL runtime library.
+      Provides:
+          - libEGL = %{version}-%{release}
+      Files:
+          - "%{_libdir}/libEGL.so.1"
+          - "%{_libdir}/libEGL.so.1.0.0"
+
+    - Name: libEGL-compat
+      Summary: Mesa libEGL runtime compatibility library
+      Group: System/Libraries
+      Description: Mesa libEGL runtime compatibility library.
+      Requires:
+          - libEGL.so.1
+      Provides:
+          - libEGL.so
+      Files:
+          - "%{_libdir}/libEGL.so"
+
+    - Name: libglapi-devel
+      Summary: Mesa libglapi development package
+      Group: System/Libraries
+      Description: Mesa libglapi development package.
+      Provides:
+          - libglapi-devel
+      Requires:
+          - mesa-x86-radeon-libglapi = %{version}-%{release}
+      Files:
+          - "%{_libdir}/libglapi.so"
+
+    - Name: libGLESv2-devel
+      Summary: Mesa libGLESv2 development package
+      Group: Development/Libraries
+      Description: Mesa libGLESv2 development packages
+      Provides:
+          - libGLESv2-devel
+      Requires:
+          - mesa-x86-radeon-libGLESv2 = %{version}-%{release}
+      Obsoletes:
+          - mesa-x86-radeon-libGLESv2-compat
+      Files:
+          - "%{_libdir}/libGLESv2.so"
+          - "%{_includedir}/GLES2/gl2.h"
+          - "%{_includedir}/GLES2/gl2ext.h"
+          - "%{_includedir}/GLES2/gl2platform.h"
+          - "%{_includedir}/GLES3/gl3.h"
+          - "%{_includedir}/GLES3/gl3ext.h"
+          - "%{_includedir}/GLES3/gl3platform.h"
+          - "%{_libdir}/pkgconfig/glesv2.pc"
+
+    - Name: libEGL-devel
+      Summary: Mesa libEGL development package
+      Group: Development/Libraries
+      Description: Mesa libEGL development packages
+      Provides:
+          - libEGL-devel
+      Requires:
+          - mesa-x86-radeon-libEGL = %{version}-%{release}
+      Obsoletes:
+          - mesa-x86-radeon-libEGL-compat
+      Files:
+          - "%{_libdir}/libEGL.so"
+          - "%dir %{_includedir}/EGL"
+          - "%{_includedir}/EGL/egl.h"
+          - "%{_includedir}/EGL/eglext.h"
+          - "%{_includedir}/EGL/eglplatform.h"
+          - "%{_includedir}/EGL/eglmesaext.h"
+          - "%dir %{_includedir}/KHR"
+          - "%{_includedir}/KHR/khrplatform.h"
+          - "%{_libdir}/pkgconfig/egl.pc"
+
+    - Name: libGL
+      Summary: Mesa libGL runtime libraries and DRI drivers
+      Group: System/Libraries
+      Description: Mesa libGL runtime library.
+      Provides:
+          - libGL = %{version}-%{release}
+      Files:
+          - "%{_libdir}/libGL.so.*"
+
+    - Name: libGL-devel
+      Summary: Mesa libGL development package
+      Group: Development/Libraries
+      Description: Mesa libGL development packages
+      Requires:
+          - mesa-x86-radeon-libGL = %{version}-%{release}
+          - libX11-devel
+      Provides:
+          - libGL-devel
+      Files:
+          - "%{_includedir}/GL/gl.h"
+          - "%{_includedir}/GL/gl_mangle.h"
+          - "%{_includedir}/GL/glext.h"
+          - "%{_includedir}/GL/glx.h"
+          - "%{_includedir}/GL/glx_mangle.h"
+          - "%{_includedir}/GL/glxext.h"
+          - "%dir %{_includedir}/GL/internal"
+          - "%{_includedir}/GL/internal/dri_interface.h"
+          - "%{_libdir}/libGL.so"
+          - "%{_libdir}/pkgconfig/gl.pc"
+
+    - Name: libdricore%{version}
+      Summary: Mesa-based DRI runtime library
+      Group: Development/Libraries
+      Description: Mesa-based DRI runtime library.
+      Provides:
+          - libdricore%{version} = %{version}-%{release}
+      Files:
+          - "%{_libdir}/libdricore9.1.2.so"
+          - "%{_libdir}/libdricore9.1.2.so.*"
+          - "%{_sysconfdir}/drirc"
+
+    - Name: libwayland-egl
+      Summary: Mesa libwayland EGL runtime libraries
+      Group: System/Libraries
+      Description: Mesa libwayland EGL runtime library.
+      Provides:
+          - libwayland-egl = %{version}-%{release}
+      Files:
+          - "%{_libdir}/libwayland-egl.so.1"
+          - "%{_libdir}/libwayland-egl.so.1.0.0"
+
+    - Name: libwayland-egl-devel
+      Summary: Mesa libwayland EGL development package
+      Group: Development/Libraries
+      Description: Mesa libwayland EGL development packages
+      Requires:
+          - mesa-x86-radeon-libwayland = %{version}-%{release}
+      Provides:
+          - libwayland-egl-devel
+      Files:
+          - "%{_libdir}/pkgconfig/wayland-egl.pc"
+          - "%{_libdir}/libwayland-egl.so"
+
+    - Name: dri-drivers-devel
+      Summary: Mesa-based DRI development files
+      Group: Development/Libraries
+      Description: Mesa-based DRI driver development files.
+      Files:
+          - "%{_libdir}/pkgconfig/dri.pc"
+
+    - Name: dri-radeon-driver
+      Summary: Mesa-based DRI drivers
+      Group: Graphics/Display and Graphics Adaptation
+      Description: Mesa-based i965 DRI driver.
+      Provides:
+          - mesa-dri-drivers = %{version}-%{release}
+      Files:
+          - "%{_libdir}/dri/r200_dri.so"
+          - "%{_libdir}/dri/r300_dri.so"
+          - "%{_libdir}/dri/r600_dri.so"
+          - "%{_libdir}/dri/radeon_dri.so"
+
+    - Name: dri-swrast-driver
+      Summary: Mesa-based DRI drivers
+      Group: Graphics/Display and Graphics Adaptation
+      Description: Mesa-based swrast DRI driver.
+      Provides:
+          - mesa-x86-radeon-dri-drivers = %{version}-%{release}
+      Files:
+          - "%{_libdir}/dri/swrast_dri.so"
+
