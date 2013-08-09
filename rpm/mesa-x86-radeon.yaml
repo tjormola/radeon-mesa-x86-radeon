@@ -225,8 +225,8 @@ SubPackages:
       Provides:
           - libdricore%{version} = %{version}-%{release}
       Files:
-          - "%{_libdir}/libdricore9.1.2.so"
-          - "%{_libdir}/libdricore9.1.2.so.*"
+          - "%{_libdir}/libdricore%{version}.so"
+          - "%{_libdir}/libdricore%{version}.so.*"
           - "%{_sysconfdir}/drirc"
 
     - Name: libwayland-egl

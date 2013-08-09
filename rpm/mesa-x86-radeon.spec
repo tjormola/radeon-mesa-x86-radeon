@@ -424,8 +424,8 @@ cd ..
 
 %files libdricore%{version}
 %defattr(-,root,root,-)
-%{_libdir}/libdricore9.1.2.so
-%{_libdir}/libdricore9.1.2.so.*
+%{_libdir}/libdricore%{version}.so
+%{_libdir}/libdricore%{version}.so.*
 %{_sysconfdir}/drirc
 # >> files libdricore%{version}
 # << files libdricore%{version}
