@@ -9,7 +9,7 @@ Name:       mesa-x86-radeon
 # << macros
 
 Summary:    Mesa graphics libraries built for Radeon
-Version:    9.1.0
+Version:    9.2.0
 Release:    1
 Group:      System/Libraries
 License:    MIT
