@@ -16,10 +16,10 @@ License:    MIT
 URL:        http://www.mesa3d.org/beta
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  mesa-x86-radeon.yaml
-BuildRequires:  pkgconfig(glproto)
-BuildRequires:  pkgconfig(dri2proto) >= 1.1
+BuildRequires:  pkgconfig(glproto) >= 1.4.14
+BuildRequires:  pkgconfig(dri2proto) >= 2.6
 BuildRequires:  pkgconfig(xproto)
-BuildRequires:  pkgconfig(libdrm) >= 2.4.30
+BuildRequires:  pkgconfig(libdrm) >= 2.4.46
 BuildRequires:  pkgconfig(xxf86vm)
 BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xfixes)

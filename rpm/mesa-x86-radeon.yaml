@@ -23,10 +23,10 @@ PkgBR:
     - llvm-devel
     - gettext
 PkgConfigBR:
-    - glproto
-    - dri2proto >= 1.1
+    - glproto >= 1.4.14
+    - dri2proto >= 2.6
     - xproto
-    - libdrm >= 2.4.30
+    - libdrm >= 2.4.46
     - xxf86vm
     - xext
     - xfixes
